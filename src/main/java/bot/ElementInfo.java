@@ -17,15 +17,17 @@ public class ElementInfo {
         this.serialNumber = serialNumber;
     }
 
+    public String toFormat() {
+        return "sdfsdf";
+    }
 
     @Override
     public String toString() {
-        return "ElementInfo{" +
-                "serialNumber=" + serialNumber +
-                ", abbreviation='" + abbreviation + '\'' +
-                ", russianName='" + russianName + '\'' +
-                ", mass=" + mass +
-                '}';
+        return
+                "\nserialNumber=" + serialNumber +
+                ", \nabbreviation='" + abbreviation + '\'' +
+                ", \nrussianName '" + russianName + '\'' +
+                ", \nmass=" + mass;
     }
 
     public int getSerialNumber() {

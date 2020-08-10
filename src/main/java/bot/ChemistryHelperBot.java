@@ -20,25 +20,31 @@ public class ChemistryHelperBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText();
 
-            for (int j = 0; j < tableElements.length; j++) {
-                ElementInfo elementInfo = tableElements[j];
+            int serialNumberFromMessage;
 
-                int serialNumberFromMessage;
-
-                try {
-                    serialNumberFromMessage = Integer.parseInt(message);
-                } catch (Exception e) {
-                    serialNumberFromMessage = 0;
-                }
-
-                if (elementInfo.getSerialNumber() == serialNumberFromMessage) {
-                    sendMessage.setText(elementInfo.toString());
-                } else if (elementInfo.getAbbreviation() == message) {
-                    sendMessage.setText(elementInfo.toString());
-                } else {
-                    sendMessage.setText("Нет такого элемента!");
-                }
+            try {
+                serialNumberFromMessage = Integer.parseInt(message);
+            } catch (Exception e) {
+                serialNumberFromMessage = 0;
             }
+
+            int indexElement = serialNumberFromMessage - 1;
+            boolean isGoodIndex = validateIndex(indexElement);
+            if(isGoodIndex) {
+                ElementInfo foundElement = tableElements[indexElement];
+                sendMessage.setText(foundElement.toString());
+            }
+            else{
+                sendMessage.setText("Нет такого элемента!!!");
+            }
+
+            // Если полученное число больше 0 и меньше количества элементов в массиве
+            // то вычитай из него 1 и бери элемент с таким номером из массива
+            // если первое условие не прошло, то пиши, что "Ты дурачек, что-ли, ты что мне пишешь?
+
+
+            // Добавить функционал вычисления малярной массы
+
 
             try {
                 execute(sendMessage);
@@ -47,6 +53,12 @@ public class ChemistryHelperBot extends TelegramLongPollingBot {
             }
         }
     }
+
+
+    private boolean validateIndex(int index){
+            return index >= 0 && index < tableElements.length;
+    }
+
 
 
     public String getBotUsername() {
